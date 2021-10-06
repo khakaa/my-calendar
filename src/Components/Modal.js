@@ -1,24 +1,56 @@
 import React from "react";
 import styled from "styled-components";
-
 // icon
 import CloseIcon from "@mui/icons-material/Close";
+import Button from "@mui/material/Button";
+//redux
+import { useSelector } from "react-redux";
+import { flexbox } from "@mui/system";
 
 const Modal = (props) => {
-  const { visible, close } = props;
+  const { id, time, date, title, visible, close } = props;
+
+  const buttonStyles = {
+    backgroundColor: "black",
+    color: "white",
+    // margin: "0 5vw",
+  };
+
+  const scheduleList = useSelector((state) => state.calendar.scheduleList);
+  // console.log(scheduleList);
   return (
     <>
       {visible ? (
         <div>
           <ModalOverlay />
+
           <ModalWrapper>
-            <h1>할일 추가</h1>
-            <div>제목</div>
-            <div>내용</div>
-            <button>추가하기</button>
-            <ButtonWrapper onClick={close}>
-              <CloseIcon />
+            <h1>My schedule</h1>
+            <div>
+              📌 {date} {time}
+            </div>
+            <div> 📓 {title}</div>
+            <ButtonWrapper>
+              <Button
+                style={buttonStyles}
+                variant="outlined"
+                color="inherit"
+                onClick={() => {}}
+              >
+                완료하기
+              </Button>
+              <Button
+                style={buttonStyles}
+                variant="outlined"
+                color="inherit"
+                onClick={() => {}}
+              >
+                삭제하기
+              </Button>
             </ButtonWrapper>
+            <CloseButtonWrapper onClick={close}>
+              <CloseIcon />
+            </CloseButtonWrapper>
           </ModalWrapper>
         </div>
       ) : null}
@@ -57,6 +89,12 @@ const ModalWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 25vw;
+`;
+
+const CloseButtonWrapper = styled.div`
   position: fixed;
   top: 5%;
   right: 5%;
