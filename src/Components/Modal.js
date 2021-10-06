@@ -4,32 +4,32 @@ import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 //redux
-import { useSelector } from "react-redux";
-import { flexbox } from "@mui/system";
+import { useSelector, useDispatch } from "react-redux";
+//action
+import { actionCreators as calendarActions } from "../redux/modules/calendar";
 
 const Modal = (props) => {
-  const { id, time, date, title, visible, close } = props;
-
+  const { id, hour, minute, date, title, visible, close } = props;
+  const dispatch = useDispatch();
   const buttonStyles = {
     backgroundColor: "black",
     color: "white",
     // margin: "0 5vw",
   };
 
-  const scheduleList = useSelector((state) => state.calendar.scheduleList);
+  // const scheduleList = useSelector((state) => state.calendar.scheduleList);
   // console.log(scheduleList);
   return (
     <>
       {visible ? (
         <div>
           <ModalOverlay />
-
           <ModalWrapper>
             <h1>My schedule</h1>
             <div>
-              📌 {date} {time}
+              📌 {date} {hour} : {minute} 📌
             </div>
-            <div> 📓 {title}</div>
+            <div> ✨ {title} ✨ </div>
             <ButtonWrapper>
               <Button
                 style={buttonStyles}
@@ -43,7 +43,11 @@ const Modal = (props) => {
                 style={buttonStyles}
                 variant="outlined"
                 color="inherit"
-                onClick={() => {}}
+                onClick={() => {
+                  dispatch(calendarActions.deleteTodoFB(id));
+                  // dispatch(calendarActions.setTodoFB());
+                  close();
+                }}
               >
                 삭제하기
               </Button>

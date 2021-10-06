@@ -61,7 +61,7 @@ const Addtodo = (props) => {
                 todo: inputTodo.current.value,
               })
             );
-            history.push("/");
+            // history.push("/");
           }}
         >
           추가하기

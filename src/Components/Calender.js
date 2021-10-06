@@ -5,19 +5,28 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { history } from "../redux/configStore";
+//action
+import { actionCreators as calendarActions } from "../redux/modules/calendar";
 
 import Modal from "./Modal";
 
 const Calendar = (props) => {
+  const dispatch = useDispatch();
+
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState(null);
-  const [time, setTime] = useState(null);
+  const [hour, setHour] = useState(null);
+  const [minute, setMinute] = useState(null);
   const [date, setDate] = useState(null);
   const [title, setTitle] = useState(null);
 
   const scheduleList = useSelector((state) => state.calendar.scheduleList);
+
+  React.useEffect(() => {
+    dispatch(calendarActions.setTodoFB());
+  }, []);
 
   const modalOpen = () => {
     setVisible(true);
@@ -36,19 +45,22 @@ const Calendar = (props) => {
     let targetSchedule = scheduleList.filter((s, idx) => {
       return id === s.id;
     });
-    console.log(targetSchedule);
+    // console.log(targetSchedule);
 
     let splitedDay = targetSchedule[0].dateList.split("T");
     let targetDate = splitedDay[0];
-    let targetTime = splitedDay[1];
-    let meridiem = targetTime.split(":")[0] < 12 ? "오전" : "오후";
+    let splitedTime = splitedDay[1].split(":");
+    let meridiem = splitedTime[0] < 12 ? "오전" : "오후";
+    let targetHour = splitedTime[0] > 12 ? splitedTime[0] - 12 : splitedTime[0];
+    let targetMinute = splitedTime[1];
     let targetTitle = targetSchedule[0].todoList;
 
     setId(targetSchedule[0].id);
-    setTime(meridiem + " " + targetTime);
+    setHour(meridiem + " " + targetHour);
+    setMinute(targetMinute);
     setDate(targetDate);
     setTitle(targetTitle);
-    console.log(id, time, date, title);
+    // console.log(id, time, date, title);
     modalOpen();
   };
 
@@ -56,6 +68,7 @@ const Calendar = (props) => {
     return { id: s.id, title: s.todoList, start: s.dateList };
   });
 
+  // console.log(calendarList);
   return (
     <>
       <FullCalendar
@@ -81,7 +94,8 @@ const Calendar = (props) => {
       <Modal
         id={id}
         date={date}
-        time={time}
+        hour={hour}
+        minute={minute}
         title={title}
         visible={visible}
         close={modalClose}

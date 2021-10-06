@@ -7,17 +7,14 @@ import Calendar from "./Components/Calender";
 import Addtodo from "./Components/Addtodo";
 import React from "react";
 
-//action
-import { actionCreators as calendarActions } from "./redux/modules/calendar";
-//redux
 import { useDispatch } from "react-redux";
+import { actionCreators as calendarActions } from "./redux/modules/calendar";
 
 function App() {
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(calendarActions.setTodoFB());
-  }, []);
-
+  // const dispatch = useDispatch();
+  // React.useEffect(() => {
+  //   dispatch(calendarActions.setTodoFB());
+  // }, []);
   return (
     <>
       <ConnectedRouter history={history}>
