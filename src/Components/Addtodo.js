@@ -10,30 +10,40 @@ import { history } from "../redux/configStore";
 import { actionCreators as calendarActions } from "../redux/modules/calendar";
 import { useDispatch, useSelector } from "react-redux";
 
-const Addtodo = (props) => {
+const Addtodo = () => {
   const dispatch = useDispatch();
   const scheduleList = useSelector((state) => state.calendar.scheduleList);
-  const inputTodo = React.useRef(null);
-  const inputDate = React.useRef(null);
-
+  // const inputTodo = React.useRef(null);
+  // const inputDate = React.useRef(null);
+  const [inputDate, setInputDate] = React.useState("");
+  const [inputTodo, setInputTodo] = React.useState("");
   console.log(scheduleList);
   const buttonStyles = {
-    backgroundColor: "black",
+    width: "8vw",
+    height: "5.5vh",
+    backgroundColor: "#67B79D",
     color: "white",
   };
 
-  // const schedule = {
-  //   date: inputDate.current.value,
-  //   todo: inputTodo.current.value,
-  // };
+  const submit = () => {
+    if (inputDate === "" || inputTodo === "") {
+      window.alert("일시 또는 내용을 입력해주셔야 합니다! 😊");
+      return;
+    }
+    dispatch(
+      calendarActions.addTodoFB({
+        date: inputDate,
+        todo: inputTodo,
+      })
+    );
+  };
 
-  // console.log(schedule);
   return (
-    <>
+    <div style={{ backgroundColor: "#rgb(158 223 202" }}>
       <Card>
         <h1>할 일 추가</h1>
         <TextField
-          inputRef={inputDate}
+          // inputRef={inputDate}
           id="datetime-local"
           label="일시"
           type="datetime-local"
@@ -42,26 +52,27 @@ const Addtodo = (props) => {
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e) => {
+            // console.log(e.target.value);
+            setInputDate(e.target.value);
+          }}
         />
         <TextField
-          inputRef={inputTodo}
+          // inputRef={inputTodo}
           id="standard-basic"
           label="내용"
           variant="standard"
+          onChange={(e) => {
+            // console.log(e.target.value);
+            setInputTodo(e.target.value);
+          }}
         />
         <Button
           style={buttonStyles}
           variant="outlined"
           color="inherit"
           onClick={() => {
-            // console.log(inputTodo.current.value, inputDate.current.value);
-            dispatch(
-              calendarActions.addTodoFB({
-                date: inputDate.current.value,
-                todo: inputTodo.current.value,
-              })
-            );
-            // history.push("/");
+            submit();
           }}
         >
           추가하기
@@ -74,7 +85,7 @@ const Addtodo = (props) => {
           <CloseIcon />
         </ButtonWrapper>
       </Card>
-    </>
+    </div>
   );
 };
 

@@ -3,18 +3,23 @@ import styled from "styled-components";
 // 캘린더 패키지
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-
+import bootstrapPlugin from "@fullcalendar/bootstrap";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { history } from "../redux/configStore";
 //action
 import { actionCreators as calendarActions } from "../redux/modules/calendar";
-
+// components
 import Modal from "./Modal";
+// material ui
+import CheckIcon from "@mui/icons-material/Check";
+import AddIcon from "@mui/icons-material/Add";
 
 const Calendar = (props) => {
   const dispatch = useDispatch();
 
+  const [completedTodo, setCompletedTodo] = useState(false);
+  const [buttonShow, setButtonShow] = useState(false);
   const [visible, setVisible] = useState(false);
   const [id, setId] = useState(null);
   const [hour, setHour] = useState(null);
@@ -36,16 +41,21 @@ const Calendar = (props) => {
     setVisible(false);
   };
 
-  // info.event.start : Wed Oct 06 2021 15:33:00 GMT+0900 (한국 표준시)
-  // info.event.title : '222'
-  // info.event.startStr : 2021-10-06T15:33:00+09:00
+  // false : 모든일정 , true : 완료된 일정
+  const showCompletedSchedule = (bool) => {
+    setCompletedTodo(bool);
+  };
+
+  // false : 완료일정버튼, true : 모든일정버튼
+  const clickButton = (bool) => {
+    setButtonShow(bool);
+  };
 
   // 일정 상세 모달창 띄우기
   const showDetail = (id) => {
     let targetSchedule = scheduleList.filter((s, idx) => {
       return id === s.id;
     });
-    // console.log(targetSchedule);
 
     let splitedDay = targetSchedule[0].dateList.split("T");
     let targetDate = splitedDay[0];
@@ -60,36 +70,73 @@ const Calendar = (props) => {
     setMinute(targetMinute);
     setDate(targetDate);
     setTitle(targetTitle);
-    // console.log(id, time, date, title);
     modalOpen();
   };
 
   const calendarList = scheduleList.map((s, idx) => {
-    return { id: s.id, title: s.todoList, start: s.dateList };
+    return {
+      id: s.id,
+      title: s.todoList,
+      start: s.dateList,
+      color: s.completed ? "#67c2e0" : "pink", // 완료 상태에 따라 색상 변경
+      completed: s.completed,
+    };
   });
 
-  // console.log(calendarList);
+  const completedList = calendarList.filter((c, idx) => {
+    return c.completed === true;
+  });
+
   return (
     <>
       <FullCalendar
-        events={calendarList}
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
+        events={completedTodo ? completedList : calendarList}
+        plugins={[bootstrapPlugin, dayGridPlugin]}
+        // themeSystem="bootstrap"
+        // themeName="sketchy"
+        // initialView="dayGridMonth"
         height="100vh"
+        backgroundColor="gray"
         headerToolbar={{
-          start: "",
+          left: "prev",
           center: "title",
-          end: "prev,next",
+          right: "next",
         }}
         eventClick={(info) => showDetail(info.event.id)}
+        eventDisplay="block"
+        eventTimeFormat={{
+          hour: "numeric",
+          minute: "2-digit",
+          meridiem: "short",
+        }}
       />
-      <CompleteButton>완료된 일정</CompleteButton>
+      {buttonShow ? (
+        <CompleteButton
+          onClick={() => {
+            showCompletedSchedule(false);
+            clickButton(false);
+          }}
+        >
+          <CheckIcon />
+          모든 일정 보기
+        </CompleteButton>
+      ) : (
+        <CompleteButton
+          onClick={() => {
+            showCompletedSchedule(true);
+            clickButton(true);
+          }}
+        >
+          <CheckIcon />
+          완료 일정 보기
+        </CompleteButton>
+      )}
       <AddButton
         onClick={() => {
           history.push("/add");
         }}
       >
-        추가하기
+        <AddIcon /> 추가하기
       </AddButton>
       <Modal
         id={id}
@@ -100,27 +147,36 @@ const Calendar = (props) => {
         visible={visible}
         close={modalClose}
       />
-      {/* onClick={modalOpen} */}
     </>
   );
 };
 
 const CompleteButton = styled.button`
   padding: 10px;
-  border-radius: 16px;
+  border-radius: 23px;
   position: fixed;
-  top: 80vh;
+  top: 70vh;
   z-index: 10;
   right: 30px;
+  width: 150px;
+  border: none;
+  color: white;
+  background-color: #b6ded1;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.24);
 `;
 
 const AddButton = styled.button`
   padding: 10px;
-  border-radius: 16px;
+  border-radius: 23px;
   position: fixed;
-  top: 89vh;
+  top: 79vh;
   z-index: 10;
   right: 30px;
+  width: 150px;
+  border: none;
+  color: white;
+  background-color: #b6ded1;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.24);
 `;
 
 export default Calendar;

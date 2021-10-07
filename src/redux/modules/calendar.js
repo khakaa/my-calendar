@@ -7,11 +7,13 @@ import { history } from "../configStore";
 // action
 const ADD_TODO = "ADD_TODO";
 const SET_TODO = "SET_TODO";
+const UPDATE_TODO = "UPDATE_TODO";
 const DELETE_TODO = "DELETE_TODO";
 
 //action creators
 const addTodo = createAction(ADD_TODO, (scheduleList) => ({ scheduleList }));
 const setTodo = createAction(SET_TODO, (scheduleList) => ({ scheduleList }));
+const updateTodo = createAction(UPDATE_TODO, (id) => ({ id }));
 const deleteTodo = createAction(DELETE_TODO, (id) => ({ id }));
 
 const initialState = {
@@ -28,7 +30,6 @@ const setTodoFB = () => {
       docs.forEach((doc) => {
         scheduleList = [...scheduleList, { ...doc.data(), id: doc.id }];
       });
-      // console.log(scheduleList);
       dispatch(setTodo(scheduleList));
     });
   };
@@ -40,12 +41,27 @@ const addTodoFB = (schedule) => {
     let scheduleList = {
       dateList: schedule.date,
       todoList: schedule.todo,
+      completed: false,
     };
     scheduleDB.add(scheduleList).then((docRef) => {
       scheduleList = { ...scheduleList, id: docRef.id };
       dispatch(addTodo(scheduleList));
       history.push("/");
     });
+  };
+};
+
+const updateTodoFB = (id) => {
+  return function (dispatch, getState) {
+    const scheduleDB = firestore.collection("schedule");
+    const scheduleList = getState().calendar.scheduleList;
+    scheduleDB
+      .doc(id)
+      .update({ completed: true })
+      .then(() => {
+        dispatch(setTodoFB());
+        // dispatch(updateTodo(id, ))
+      });
   };
 };
 
@@ -73,14 +89,6 @@ export default handleActions(
     [SET_TODO]: (state, action) =>
       produce(state, (draft) => {
         draft.scheduleList = action.payload.scheduleList;
-        // draft.scheduleList = draft.scheduleList.reduce((acc, cur) => {
-        //   if (acc.findIndex((a) => a.id === cur.id) === -1) {
-        //     acc = [...acc, cur];
-        //   } else {
-        //     acc[acc.findIndex((a) => a.id === cur.id)] = cur;
-        //   }
-        //   return acc;
-        // }, []);
       }),
     [DELETE_TODO]: (state, action) =>
       produce(state, (draft) => {
@@ -98,6 +106,7 @@ const actionCreators = {
   deleteTodo,
   addTodoFB,
   setTodoFB,
+  updateTodoFB,
   deleteTodoFB,
 };
 

@@ -1647,6 +1647,19 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.5.1.tgz#a64d1af3c62e3bb89576ec58af880980a562bf4e"
   integrity sha512-dZMzN0uAjwJXWYYAcnxIwXqRTZw3o14hGe7O6uhwjD1ZQWPVYA5lASgnNskEBra0knVBsOXB4KXg+HnlKewN/A==
 
+"@fortawesome/fontawesome-free@^5.15.4":
+  version "5.15.4"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.15.4.tgz#ecda5712b61ac852c760d8b3c79c96adca5554e5"
+  integrity sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==
+
+"@fullcalendar/bootstrap@^5.9.0":
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/bootstrap/-/bootstrap-5.9.0.tgz#b9d358f9bda20cb8bad162c91c9f9fd110c8b7ee"
+  integrity sha512-SOWHWi9K2SGM4MTipYrXmyuz/aoeDbTscossLIJlXecC88RXexww2MBYyexorTR3+/q6Q6ZyPpD/UdOnJLXoRA==
+  dependencies:
+    "@fullcalendar/common" "~5.9.0"
+    tslib "^2.1.0"
+
 "@fullcalendar/common@~5.9.0":
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-5.9.0.tgz#e920ebddb5a144b0ec1e3f184dbbbf442ba46d65"
@@ -3562,6 +3575,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootswatch@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/bootswatch/-/bootswatch-5.1.2.tgz#4c564f03b12bdd38703686c5155692c748cacf73"
+  integrity sha512-ibg1i79ph0lgcYaWf6TzNKiQoVbIQlJlyFFb7dF9s3sjfB/WXT3vxLV+5vMJekdeEd5Vn9r5zhJZo3IrRjMPOg==
 
 brace-expansion@^1.1.7:
   version "1.1.11"

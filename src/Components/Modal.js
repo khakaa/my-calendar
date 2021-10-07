@@ -4,7 +4,7 @@ import styled from "styled-components";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 //redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 //action
 import { actionCreators as calendarActions } from "../redux/modules/calendar";
 
@@ -12,13 +12,13 @@ const Modal = (props) => {
   const { id, hour, minute, date, title, visible, close } = props;
   const dispatch = useDispatch();
   const buttonStyles = {
-    backgroundColor: "black",
+    width: "8vw",
+    height: "5.5vh",
+    backgroundColor: "#67B79D",
     color: "white",
-    // margin: "0 5vw",
+    padding: "5px 0px",
   };
 
-  // const scheduleList = useSelector((state) => state.calendar.scheduleList);
-  // console.log(scheduleList);
   return (
     <>
       {visible ? (
@@ -35,7 +35,10 @@ const Modal = (props) => {
                 style={buttonStyles}
                 variant="outlined"
                 color="inherit"
-                onClick={() => {}}
+                onClick={() => {
+                  dispatch(calendarActions.updateTodoFB(id));
+                  close();
+                }}
               >
                 완료하기
               </Button>
@@ -95,7 +98,7 @@ const ModalWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 25vw;
+  width: 20vw;
 `;
 
 const CloseButtonWrapper = styled.div`
