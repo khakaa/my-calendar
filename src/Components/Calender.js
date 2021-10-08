@@ -108,8 +108,9 @@ const Calendar = (props) => {
           meridiem: "short",
         }}
       />
+      {/* buttonShow라는 state로 버튼 상태 관리 */}
       {buttonShow ? (
-        <CompleteButton
+        <Button
           onClick={() => {
             showCompletedSchedule(false);
             clickButton(false);
@@ -117,9 +118,9 @@ const Calendar = (props) => {
         >
           <TodayIcon />
           <span>모든 일정 보기</span>
-        </CompleteButton>
+        </Button>
       ) : (
-        <CompleteButton
+        <Button
           onClick={() => {
             showCompletedSchedule(true);
             clickButton(true);
@@ -127,7 +128,7 @@ const Calendar = (props) => {
         >
           <CheckIcon />
           <span>완료 일정 보기</span>
-        </CompleteButton>
+        </Button>
       )}
       <AddButton
         onClick={() => {
@@ -149,7 +150,7 @@ const Calendar = (props) => {
   );
 };
 
-const CompleteButton = styled.button`
+const Button = styled.button`
   padding: 10px;
   border-radius: 23px;
   position: fixed;
