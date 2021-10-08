@@ -14,6 +14,7 @@ import Modal from "./Modal";
 // material ui
 import CheckIcon from "@mui/icons-material/Check";
 import AddIcon from "@mui/icons-material/Add";
+import TodayIcon from "@mui/icons-material/Today";
 
 const Calendar = (props) => {
   const dispatch = useDispatch();
@@ -92,9 +93,6 @@ const Calendar = (props) => {
       <FullCalendar
         events={completedTodo ? completedList : calendarList}
         plugins={[bootstrapPlugin, dayGridPlugin]}
-        // themeSystem="bootstrap"
-        // themeName="sketchy"
-        // initialView="dayGridMonth"
         height="100vh"
         backgroundColor="gray"
         headerToolbar={{
@@ -117,8 +115,8 @@ const Calendar = (props) => {
             clickButton(false);
           }}
         >
-          <CheckIcon />
-          모든 일정 보기
+          <TodayIcon />
+          <span>모든 일정 보기</span>
         </CompleteButton>
       ) : (
         <CompleteButton
@@ -128,7 +126,7 @@ const Calendar = (props) => {
           }}
         >
           <CheckIcon />
-          완료 일정 보기
+          <span>완료 일정 보기</span>
         </CompleteButton>
       )}
       <AddButton
@@ -136,7 +134,7 @@ const Calendar = (props) => {
           history.push("/add");
         }}
       >
-        <AddIcon /> 추가하기
+        <AddIcon /> <span>추가하기</span>
       </AddButton>
       <Modal
         id={id}
@@ -163,6 +161,12 @@ const CompleteButton = styled.button`
   color: white;
   background-color: #b6ded1;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.24);
+  @media screen and (max-width: 550px) {
+    width: 50px;
+    span {
+      display: none;
+    }
+  } ;
 `;
 
 const AddButton = styled.button`
@@ -177,6 +181,12 @@ const AddButton = styled.button`
   color: white;
   background-color: #b6ded1;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 2px 5px rgba(0, 0, 0, 0.24);
+  @media screen and (max-width: 550px) {
+    width: 50px;
+    span {
+      display: none;
+    }
+  } ;
 `;
 
 export default Calendar;

@@ -17,12 +17,13 @@ const Modal = (props) => {
     backgroundColor: "#67B79D",
     color: "white",
     padding: "5px 0px",
+    margin: "0px 3vw 0px 3vw",
   };
 
   return (
     <>
       {visible ? (
-        <div>
+        <>
           <ModalOverlay />
           <ModalWrapper>
             <h1>My schedule</h1>
@@ -59,7 +60,7 @@ const Modal = (props) => {
               <CloseIcon />
             </CloseButtonWrapper>
           </ModalWrapper>
-        </div>
+        </>
       ) : null}
     </>
   );
@@ -80,7 +81,7 @@ const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 50vw;
+  width: 90vw;
   max-width: 700px;
   height: 50vh;
   padding: 30px;
@@ -98,7 +99,6 @@ const ModalWrapper = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 20vw;
 `;
 
 const CloseButtonWrapper = styled.div`
