@@ -1,17 +1,20 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 
+require("dotenv").config();
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCMffSz3sgnOsOPnnDfiCOhIfZ0yiSMZ3U",
-  authDomain: "my-calendar-d71e0.firebaseapp.com",
-  projectId: "my-calendar-d71e0",
-  storageBucket: "my-calendar-d71e0.appspot.com",
-  messagingSenderId: "414286657616",
-  appId: "1:414286657616:web:723679eaedcce348aaf955",
-  measurementId: "G-RJF6ML31Y6",
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
+  measurementId: process.env.REACT_APP_measurementId,
 };
 
 firebase.initializeApp(firebaseConfig);
+const apiKey = process.env.REACT_APP_apiKey;
 const firestore = firebase.firestore();
 
-export { firestore };
+export { firestore, apiKey };

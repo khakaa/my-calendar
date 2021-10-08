@@ -19,6 +19,7 @@
     "@testing-library/user-event": "^12.1.10",
     "bootswatch": "^5.1.2",
     "connected-react-router": "6.8.0",
+    "dotenv": "^10.0.0",
     "firebase": "8.10.0",
     "firebase-tools": "^9.20.0",
     "firestore": "^1.1.6",

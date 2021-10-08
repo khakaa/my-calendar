@@ -27,7 +27,7 @@ yarn-error.log*
 # firebase
 .firebaserc
 firebase.json
-firebase.indexes.json
+firestore.indexes.json
 firestore.rules
 
 App.test.js
@@ -35,3 +35,5 @@ index.css
 logo.svg
 reportWebVitals.js
 setupTests.js
+
+.env
