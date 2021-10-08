@@ -98,9 +98,9 @@ const Calendar = (props) => {
         height="100vh"
         backgroundColor="gray"
         headerToolbar={{
-          left: "prev",
+          left: "",
           center: "title",
-          right: "next",
+          right: "prev,next",
         }}
         eventClick={(info) => showDetail(info.event.id)}
         eventDisplay="block"

@@ -52,28 +52,25 @@ const addTodoFB = (schedule) => {
 };
 
 const updateTodoFB = (id) => {
-  return function (dispatch, getState) {
+  return function (dispatch) {
     const scheduleDB = firestore.collection("schedule");
-    const scheduleList = getState().calendar.scheduleList;
     scheduleDB
       .doc(id)
       .update({ completed: true })
       .then(() => {
         dispatch(setTodoFB());
-        // dispatch(updateTodo(id, ))
       });
   };
 };
 
 const deleteTodoFB = (id) => {
-  return function (dispatch, getState) {
+  return function (dispatch) {
     const scheduleDB = firestore.collection("schedule");
     scheduleDB
       .doc(id)
       .delete()
       .then(() => {
         // dispatch(deleteTodo(id));
-        // dispatch(deleteTodoFB(id));
         dispatch(setTodoFB());
       });
   };
@@ -90,12 +87,12 @@ export default handleActions(
       produce(state, (draft) => {
         draft.scheduleList = action.payload.scheduleList;
       }),
-    [DELETE_TODO]: (state, action) =>
-      produce(state, (draft) => {
-        draft.scheduleList.filter((s, idx) => {
-          return s.id !== action.payload.id;
-        });
-      }),
+    // [DELETE_TODO]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.scheduleList.filter((s, idx) => {
+    //       return s.id !== action.payload.id;
+    //     });
+    //   }),
   },
   initialState
 );
